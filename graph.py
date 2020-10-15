@@ -13,6 +13,7 @@ Each vertex object has an instance variable pointing to a collection object that
 
 This version of the adjacency list uses more memory than the version in which adjacent vertices are listed directly, but the existence of explicit edge objects allows it extra flexibility in storing additional information about edges.
 
+Attempting this
 
 """
 
