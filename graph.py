@@ -21,67 +21,64 @@ Attempting this
 class Graph():
     def __init__(self):
         self.nodes = {}
+        self.adjacency_list = []
         self.node_count = 0
         print("Graph Created")
 
-    def add_node(self, vert_id=None, vert_connection_ids=None):
+    def print_grid(self):
+        for x in self.adjacency_list:
+            print(x)
 
-        if vert_id == None:
-            if vert_connection_ids == None:
-                vertex = Vertex(self.node_count)
-            else:
-                vertex = Vertex(self.node_count, vert_connection_ids)
+    def add_node(self, vert_connection_ids=[]):
 
-            self.nodes[self.node_count] = vertex
+        # Add the Vertex to the dict
+        self.nodes[self.node_count] = Vertex(self.node_count)
+
+        # Update the adjency_list
+        """
+        First Index is the vertex, 2nd index is the matching
+        01001
+        10001
+        00101
+        So when you add you need to add a new row and can update connections
+        """
+        if type(vert_connection_ids) == list:
+
+            self.adjacency_list.append([])
+            for vert_id in self.nodes:
+                print("Connection ID: {0}".format(vert_id))
+                if vert_id in vert_connection_ids:
+                    self.adjacency_list[vert_id].append(1)
+                    self.adjacency_list[self.node_count].append(1)
+                elif vert_id == self.node_count:
+                    self.adjacency_list[self.node_count].append(1)
+                else:
+                    self.adjacency_list[self.node_count].append(0)
+                    self.adjacency_list[vert_id].append(0)
+
+            # for vert_id in vert_connection_ids:
+               # self.adjacency_list[vert_id].append(1)
 
         self.node_count += 1
 
-    def print_node_attributes(self, v_id):
-        if v_id in self.nodes:
-            print("ID:{0}".format(self.nodes[v_id].vert_id))
-
-            if len(self.nodes[v_id]["edge_connections"] > 0):
-                if "edge_connections" in self.nodes[v_id]:
-                    for edge in self.nodes[v_id].edge_connections:
-                        print("Edge connected to:{0}".format(edge))
-        else:
-            print("This Node does not exist")
-
-    def print_all_nodes(self):
-        for node in self.nodes:
-            print("ID:{0} Connections:{1}".format(
-                self.nodes[node].vert_id, self.nodes[node].edge_connections))
-
-    def get_node_count(self):
-        return self.node_count
-
 
 class Vertex():
-    def __init__(self, vert_id, connection_ids=None, weight=None):
-        self.edge_connections = []
-        self.vert_id = vert_id
-        self.weight = weight
-
-        if connection_ids != None:
-            for vert in connection_ids:
-                self.edge_connections.append(
-                    Edge([vert, vert_id], weight=weight))
-
-        print("Created Vertex {0}".format(vert_id))
+    def __init__(self, vert_id, value=None):
+        self.id = vert_id
+        if value == None:
+            self.value = 0
+        else:
+            self.value = value
 
 
-class Edge():
-    def __init__(self, endpoints, weight=None):
-        self.vertex_endpoints = endpoints
-        self.weight = weight
-        print("Edge Added between {0} : {1}".format(
-            endpoints[0], endpoints[1]))
+g = Graph()
+g.add_node()
+g.add_node(vert_connection_ids=[0])
+g.add_node(vert_connection_ids=[0, 1])
+g.add_node()
+g.add_node()
+g.add_node()
+g.add_node()
+g.add_node(vert_connection_ids=[0])
 
-
-# n1 = Node()
-graph = Graph()
-graph.add_node()
-graph.add_node(vert_connection_ids=[0])
-
-# graph.print_node_attributes(0)
-# graph.print_node_attributes(1)
+g.print_grid()
